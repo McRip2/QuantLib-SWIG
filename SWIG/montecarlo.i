@@ -36,6 +36,20 @@ Matrix getCovariance(const Array& volatilities, const Matrix& correlations) {
 %}
 
 %{
+  using QuantLib::PortfolioMonteCarlo;
+%}
+
+class PortfolioMonteCarlo {
+ public:
+  PortfolioMonteCarlo();
+
+  Matrix simulate(const std::vector<ext::shared_ptr<Instrument>>& securities,
+		  std::vector<RelinkableHandle<Quote>>& handles,
+		  const Matrix& field_sims);
+};
+
+
+%{
 using QuantLib::Path;
 %}
 
