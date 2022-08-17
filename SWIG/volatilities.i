@@ -378,6 +378,37 @@ class BlackVarianceSurface : public BlackVolTermStructure {
 };
 
 
+// Black smiled surface Shifted
+%{
+using QuantLib::BlackVarianceSurfaceShifted;
+%}
+
+%shared_ptr(BlackVarianceSurfaceShifted);
+class BlackVarianceSurfaceShifted : public BlackVarianceSurface {
+    #if !defined(SWIGJAVA) && !defined(SWIGCSHARP)
+    %feature("kwargs") BlackVarianceSurfaceShifted;
+    #endif      
+    public:
+      %extend {
+        BlackVarianceSurfaceShifted(const Date& referenceDate,
+                                    const Calendar& cal,
+                                    const std::vector<Date>& dates,
+                                    std::vector<Real> strikes,
+                                    const Matrix& blackVolMatrix,
+                                    DayCounter dayCounter,
+                                    const RelinkableHandle<Quote> shift,
+                                    Extrapolation lowerExtrapolation = InterpolatorDefaultExtrapolation,
+                                    Extrapolation upperExtrapolation = InterpolatorDefaultExtrapolation) {
+	  BlackVarianceSurfaceShifted* surface =
+	    new BlackVarianceSurfaceShifted(referenceDate, cal, dates,
+					    strikes, blackVolMatrix, dayCounter,
+					    shift, lowerExtrapolation, upperExtrapolation);
+	  surface->setInterpolation<QuantLib::Bilinear>();
+	  surface->setInterpolation<QuantLib::Bilinear>();
+	  return surface;
+	}
+      }
+    };
 
 // constant local vol term structure
 %{
