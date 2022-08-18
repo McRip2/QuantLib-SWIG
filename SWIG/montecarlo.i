@@ -45,9 +45,7 @@ class PortfolioMonteCarlo {
 
   Matrix simulate(const std::vector<ext::shared_ptr<Instrument>>& securities,
 		  std::vector<RelinkableHandle<Quote>>& handles,
-		  std::vector<RelinkableHandle<Quote>>& vol_shift_handles,
-		  const Matrix& field_sims,
-		  const Matrix& vol_shifts);
+		  const Matrix& sims);
 };
 
 
